@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Checker - Smart Skincare Advisor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <span class="logo-badge"><i class="fa-solid fa-leaf"></i></span>
+            </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <main class="compat-page">
+        <div class="compat-column">
+            <div class="card">
+                <h2>Routine Compatibility Checker</h2>
+                <p style="color:var(--muted);">
+                    Select two or more products you're planning to use together, and we'll check
+                    whether any of their ingredients are known to conflict.
+                </p>
+
+                <div id="productChecklist" style="max-height:280px; overflow-y:auto; border:1px solid var(--border); border-radius:8px; padding:0.75rem; margin-bottom:1rem;">
+                    <p>Loading products...</p>
+                </div>
+
+                <button id="checkBtn">Check Compatibility</button>
+            </div>
+
+            <div id="resultCard" class="card" style="display:none;">
+                <h3>Result</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+
+        <div class="compat-column">
+            <div class="card">
+                <h3>Known Conflict Rules</h3>
+                <div id="rulesList"><p>Loading...</p></div>
+            </div>
+        </div>
+    </main>
+
+    <a href="chatbot.html" class="chatbot-button" title="Start Consultation">
+        <i class="fa-solid fa-comments"></i>
+    </a>
+
+    <footer>
+        <h3>Smart Skincare Advisor</h3>
+        <p>Personalized ingredient-based skincare recommendations.</p>
+        <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/compat-render.js"></script>
+    <script src="js/compatibility.js"></script>
+</body>
+
+</html>
+

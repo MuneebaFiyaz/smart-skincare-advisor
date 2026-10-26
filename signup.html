@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Smart Skincare Advisor</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Ahona logo" class="nav-logo-img" />
+            </a>
+            </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <!-- LUXURY SIGNUP SECTION -->
+    <main class="login-split-container">
+        <!-- Left Side: Branding & Welcome -->
+        <section class="login-welcome-side">
+            <div class="welcome-text-content">
+                <h1 class="serif-title">Start your glow journey today.</h1>
+                <p>Join the Ahona community to unlock personalized, ingredient-based skincare routines tailored specifically to your skin needs.</p>
+            </div>
+
+            <div class="mini-features">
+                <div class="mini-card"><strong>Personal</strong><span>Tailored advice</span></div>
+                <div class="mini-card"><strong>Track</strong><span>Routine history</span></div>
+                <div class="mini-card"><strong>Exclusive</strong><span>Member offers</span></div>
+            </div>
+        </section>
+
+        <!-- Right Side: The Registration Card -->
+        <section class="login-form-side">
+            <div class="ahona-card">
+                <span class="form-tag">REGISTER</span>
+                <h2 class="serif-title">Create an account</h2>
+                <p class="form-subtitle">Join us to get your first personalized skincare consultation.</p>
+
+                <form id="signupForm">
+                    <div class="input-group-luxury">
+                        <label>Full Name</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="name" placeholder="Enter your full name" required />
+                        </div>
+                    </div>
+
+                    <div class="input-group-luxury">
+                        <label>Email Address</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-at"></i>
+                            <input type="email" name="email" placeholder="Enter your email address" required />
+                        </div>
+                    </div>
+
+                    <div class="input-group-luxury">
+                        <label>Password (min 6 characters)</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-hashtag"></i>
+                            <input type="password" id="password" name="password" placeholder="Create a password" required minlength="6" />
+                            <span class="toggle-text" onclick="togglePassword()">Show</span>
+                        </div>
+                    </div>
+
+                        <div id="signupError" class="form-message"></div>
+                    <button type="submit" class="avenza-btn">Create Account</button>
+                </form>
+
+                <p class="switch-auth">
+                    Already have an account? <a href="login.html">Log in</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <a href="chatbot.html" class="chatbot-button" title="Start Consultation">
+        <i class="fa-solid fa-comments"></i>
+    </a>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>Smart Skincare Advisor</h3>
+        <p>Personalized ingredient-based skincare recommendations.</p>
+        <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/signup.js"></script>
+    <script>
+        // Password visibility toggle
+        function togglePassword() {
+            const passInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-text');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                toggleBtn.innerText = "Hide";
+            } else {
+                passInput.type = "password";
+                toggleBtn.innerText = "Show";
+            }
+        }
+    </script>
+</body>
+</html>
+
+

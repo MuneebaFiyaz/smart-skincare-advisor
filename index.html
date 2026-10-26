@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="home-document">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f4ee">
+    <meta name="description" content="Discover skincare selected around your skin, ingredients, and routine with Ahona Smart Skincare Advisor.">
+    <title>Ahona — Skincare, Made Personal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body class="home-page">
+    <div class="home-announcement">Thoughtful skincare starts with understanding your skin.</div>
+    <header class="navbar home-header">
+        <div class="logo">
+            <a href="index.html" class="logo-image-link" aria-label="Ahona home">
+                <img src="images/logo.png" alt="Ahona Smart Skincare Advisor" class="nav-logo-img">
+            </a>
+        </div>
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a class="is-current" href="index.html" aria-current="page">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="compatibility.html">Ingredients</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="#results">Your routine</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons" aria-label="Quick links">
+            <a href="products.html" class="nav-search-link" aria-label="Search products"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></a>
+            <a href="profile.html" aria-label="Your account"><i class="fa-regular fa-user" aria-hidden="true"></i></a>
+            <a href="cart.html" aria-label="Shopping bag"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <main class="home-main">
+        <section class="home-hero home-image-banner" aria-labelledby="banner-title">
+            <h1 id="banner-title" class="visually-hidden">Healthy Skin, Natural You.</h1>
+            <img class="home-banner-image" src="images/homepage-banner.jpg" alt="Nourish. Glow. Confidence. Healthy Skin, Natural You. Effective skincare inspired by nature, made for every skin, shown with cleanser, moisturizer, serum, and sunscreen products.">
+            <div class="home-banner-actions">
+                <a class="home-button home-button-primary" href="products.html">Shop now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                <a class="home-button home-button-secondary" href="about.html">Learn more</a>
+                <a class="home-hero-note" href="chatbot.html"><i class="fa-regular fa-sparkles" aria-hidden="true"></i> Find your personalized routine</a>
+            </div>
+        </section>
+
+        <section class="home-trust-strip" aria-label="Our approach">
+            <div><i class="fa-solid fa-leaf" aria-hidden="true"></i><span>Ingredient-minded</span></div>
+            <div><i class="fa-solid fa-flask" aria-hidden="true"></i><span>Science-led discovery</span></div>
+            <div><i class="fa-solid fa-shield-heart" aria-hidden="true"></i><span>Routine compatibility</span></div>
+            <div><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span>Personalized guidance</span></div>
+        </section>
+
+        <section class="home-benefits" id="benefits">
+            <div class="home-section-heading">
+                <span class="home-eyebrow">A ROUTINE THAT FEELS LIKE YOURS</span>
+                <h2>Good skincare starts with the details.</h2>
+                <p>Explore what matters to your skin, one considered step at a time.</p>
+            </div>
+            <div class="benefit-grid">
+                <article class="benefit-card benefit-peach">
+                    <span class="benefit-icon"><i class="fa-regular fa-sun" aria-hidden="true"></i></span>
+                    <h3>Brighter-looking skin</h3>
+                    <p>Explore ingredients commonly used to support a more even, radiant-looking complexion.</p>
+                    <a href="products.html?category=treatment">Explore treatments <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </article>
+                <article class="benefit-card benefit-green">
+                    <span class="benefit-icon"><i class="fa-solid fa-droplet" aria-hidden="true"></i></span>
+                    <h3>A boost of hydration</h3>
+                    <p>Discover moisture-loving formulas and learn how they can fit into your daily routine.</p>
+                    <a href="products.html?category=moisturizer">Explore hydration <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </article>
+                <article class="benefit-card benefit-lilac">
+                    <span class="benefit-icon"><i class="fa-solid fa-hands-holding-circle" aria-hidden="true"></i></span>
+                    <h3>Barrier-aware care</h3>
+                    <p>Find gentle options and build a routine with your skin's comfort in mind.</p>
+                    <a href="products.html?category=cleanser">Explore gentle care <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </article>
+                <article class="benefit-card benefit-cream">
+                    <span class="benefit-icon"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
+                    <h3>Ingredients, understood</h3>
+                    <p>Look beyond the label with ingredient information that helps you choose thoughtfully.</p>
+                    <a href="compatibility.html">Explore ingredients <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-featured" id="shop">
+            <div class="home-section-heading home-featured-heading">
+                <span class="home-eyebrow">A THOUGHTFUL PLACE TO START</span>
+                <h2>Find your next skincare staple.</h2>
+                <p>Browse products by category, ingredient, and the needs you want to focus on.</p>
+            </div>
+            <div class="home-product-grid" id="productGrid" aria-live="polite">
+                <div class="home-product-loading">Finding thoughtful picks for you…</div>
+            </div>
+            <a class="home-text-link" href="products.html">Explore all products <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </section>
+
+        <section class="home-routine" id="results">
+            <div class="routine-visual" aria-label="An example of a simple morning and evening skincare routine">
+                <div class="routine-visual-top"><span>YOUR ROUTINE, AT A GLANCE</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                <div class="routine-daypart">
+                    <span class="daypart-icon"><i class="fa-regular fa-sun" aria-hidden="true"></i></span>
+                    <div><small>MORNING</small><strong>Cleanse <span>→</span> Treat <span>→</span> Protect</strong></div>
+                </div>
+                <div class="routine-divider"></div>
+                <div class="routine-daypart">
+                    <span class="daypart-icon evening-icon"><i class="fa-regular fa-moon" aria-hidden="true"></i></span>
+                    <div><small>EVENING</small><strong>Cleanse <span>→</span> Treat <span>→</span> Moisturize</strong></div>
+                </div>
+                <p class="routine-visual-caption">A simple framework. Your routine can be personalized.</p>
+            </div>
+            <div class="home-routine-copy">
+                <span class="home-eyebrow">A ROUTINE THAT WORKS IN HARMONY</span>
+                <h2>Less guesswork.<br><em>More thoughtful steps.</em></h2>
+                <p>Skincare is more than choosing a single product. Get to know ingredient combinations, spot potential conflicts, and put together a routine that makes sense for you.</p>
+                <div class="routine-check-list">
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Check ingredient compatibility</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Build morning and evening routines</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Get guidance shaped around your profile</span>
+                </div>
+                <a class="home-button home-button-primary" href="routine.html">Build your routine <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </section>
+
+        <section class="home-values">
+            <div class="home-section-heading">
+                <span class="home-eyebrow">THE AHONA APPROACH</span>
+                <h2>Beauty is personal. So is good guidance.</h2>
+                <p>Tools to help you make more informed choices, without the overwhelm.</p>
+            </div>
+            <div class="values-grid">
+                <article><span>01</span><h3>Start with your skin</h3><p>Tell us about your skin type and concerns to explore more relevant suggestions.</p></article>
+                <article><span>02</span><h3>Look at the ingredients</h3><p>Learn what is in your products and how ingredients may work together.</p></article>
+                <article><span>03</span><h3>Choose with confidence</h3><p>Compare products, check compatibility, and create a routine at your own pace.</p></article>
+            </div>
+            <div class="home-values-ribbon"><span>PERSONALIZED DISCOVERY</span><i></i><span>INGREDIENT INSIGHTS</span><i></i><span>ROUTINE COMPATIBILITY</span><i></i><span>YOUR SKIN, YOUR WAY</span></div>
+        </section>
+
+        <section class="home-newsletter">
+            <div class="newsletter-art">
+                <img src="images/skincare-still-life.svg" alt="" aria-hidden="true">
+                <span class="newsletter-stamp">A NOTE<br>FOR YOUR<br>SKIN</span>
+            </div>
+            <div class="newsletter-content">
+                <span class="home-eyebrow">A LITTLE AHONA IN YOUR INBOX</span>
+                <h2>Thoughtful skin notes,<br><em>coming soon.</em></h2>
+                <p>We're getting our skincare notes ready. Leave your email to preview the newsletter sign-up.</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <label class="visually-hidden" for="newsletterEmail">Your email address</label>
+                    <input id="newsletterEmail" type="email" placeholder="Your email address" autocomplete="email" required>
+                    <button type="submit">Join now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <a href="chatbot.html" class="chatbot-button" title="Start Consultation" aria-label="Start consultation">
+        <i class="fa-solid fa-comments" aria-hidden="true"></i>
+    </a>
+    <footer class="home-footer">
+        <div class="home-footer-main">
+            <div class="home-footer-brand">
+                <a href="index.html"><img src="images/logo.png" alt="Ahona Smart Skincare Advisor"></a>
+                <p>Personalized ingredient-based skincare guidance, made thoughtful.</p>
+            </div>
+            <div class="home-footer-links">
+                <a href="products.html">Shop</a>
+                <a href="compatibility.html">Ingredients</a>
+                <a href="about.html">About us</a>
+                <a href="chatbot.html">Consultation</a>
+                <a href="profile.html">Account</a>
+            </div>
+            <div class="home-footer-social" aria-label="Social links">
+                <span aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+                <span aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></span>
+                <span aria-label="Pinterest"><i class="fa-brands fa-pinterest-p" aria-hidden="true"></i></span>
+            </div>
+        </div>
+        <div class="home-footer-bottom"><span>© 2026 Ahona Smart Skincare Advisor. All rights reserved.</span><div><a href="about.html">Disclaimer</a><a href="about.html">Contact</a></div></div>
+    </footer>
+    <script src="js/auth.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

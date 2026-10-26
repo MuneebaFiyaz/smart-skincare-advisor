@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Ahona</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        :root {
+            --peach: #eb9981;
+            --peach-light: #fff5f2;
+            --text-main: #444;
+            --text-muted: #888;
+            --bg-page: #fafafa;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        .settings-layout {
+            display: flex;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* SIDEBAR FIX */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            margin: 0 0 20px 15px;
+            color: var(--peach);
+            font-size: 1.4rem;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border: none;
+            background: white;
+            border-radius: 12px;
+            color: var(--text-main); /* Force text color to be visible */
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+            color: var(--peach);
+            width: 20px;
+        }
+
+        .tab-btn:hover {
+            background: var(--peach-light);
+        }
+
+        .tab-btn.active {
+            background: var(--peach);
+            color: white;
+        }
+
+        .tab-btn.active i {
+            color: white;
+        }
+
+        /* CONTENT AREA */
+        .main-content {
+            flex: 1;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            min-height: 400px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            margin: 0 0 8px;
+            color: var(--peach);
+            font-size: 1.5rem;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .settings-section {
+            padding: 24px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .settings-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 12px;
+        }
+
+        .settings-section p {
+            color: #666;
+            margin-top: 0;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        /* FORM STYLING */
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--peach); }
+
+        .btn-primary {
+            background: var(--peach);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover { background: #d6856e; transform: translateY(-2px); }
+
+        .danger-section {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-danger {
+            background: white;
+            color: #d9534f;
+            border: 2px solid #d9534f;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover { background: #d9534f; color: white; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <main class="settings-layout">
+        <div class="main-content">
+            <div class="card">
+                <div class="page-header">
+                    <h2>Account Settings</h2>
+                    <p>Manage your profile, sign-in details, and privacy preferences in one place.</p>
+                </div>
+
+                <section class="settings-section">
+                    <h3>Profile Details</h3>
+                    <p>Update your basic information so your account stays accurate.</p>
+                    <form id="accountForm">
+                        <label>Full Name</label>
+                        <input type="text" name="name" required>
+                        <label>Email Address</label>
+                        <input type="email" name="email" required>
+                        <div id="accountMessage"></div>
+                        <button type="submit" class="btn-primary">Update Profile</button>
+                    </form>
+                </section>
+
+                <section class="settings-section">
+                    <h3>Privacy & Security</h3>
+                    <p>Keep your account protected with a strong password and secure access.</p>
+                    <form id="passwordForm">
+                        <label>Current Password</label>
+                        <input type="password" name="currentPassword" required>
+                        <label>New Password</label>
+                        <input type="password" name="newPassword" minlength="6" placeholder="Min. 6 characters" required>
+                        <div id="passwordMessage"></div>
+                        <button type="submit" class="btn-primary">Change Password</button>
+                    </form>
+                </section>
+
+                <section class="settings-section">
+                    <h3>Account Access</h3>
+                    <p>Review your account data and manage your sign-in preferences from here.</p>
+                    <div class="danger-section">
+                        <h4 style="color: #d9534f;">Danger Zone</h4>
+                        <p style="color: #888;">Once you delete your account, there is no going back.</p>
+                        <button id="deleteAccountBtn" class="btn-danger">Delete My Account</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Product Images</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>Manage Product Images</h2>
+            <p style="color:var(--muted);">
+                Paste an image URL for any product and click Save. It updates the database directly —
+                every page (Home, Products, Product Detail, Routine) will show it automatically.
+            </p>
+            <input type="text" id="searchBox" placeholder="Search products by name..." />
+        </div>
+
+        <div id="productList"></div>
+    </main>
+
+    <footer>
+        <h3>Smart Skincare Advisor</h3>
+        <p>Admin tool — not linked from the public-facing site.</p>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
+

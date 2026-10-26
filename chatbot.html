@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consultation - Smart Skincare Advisor</title>
+<link rel="stylesheet" href="css/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+  <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+  <main class="chat-page">
+    <div class="chat-column">
+      <div class="chat-card">
+
+        <div class="chat-header">
+          <div class="chat-avatar bot-avatar"><i class="fa-solid fa-spa"></i></div>
+          <div class="chat-header-text">
+            <h3>Ahona Assistant</h3>
+            <span class="chat-status"><span class="status-dot"></span> Online &middot; Skincare Consultation</span>
+          </div>
+          <button id="startOverBtn" title="Start a new conversation" style="margin-left:auto; background:rgba(255,255,255,0.2); box-shadow:none; padding:0.4rem 0.8rem; font-size:0.78rem;">
+            <i class="fa-solid fa-rotate-right"></i>&nbsp; Start Over
+          </button>
+        </div>
+
+        <div id="chatWindow" class="chat-window"></div>
+
+        <div id="typingIndicator" class="typing-indicator" style="display:none;">
+          <div class="chat-avatar bot-avatar small"><i class="fa-solid fa-spa"></i></div>
+          <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="chat-input-row">
+          <input id="chatInput" type="text" placeholder="Type your message..." autocomplete="off" />
+          <button id="sendBtn" class="send-btn" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+
+        <div style="padding: 0 1.3rem 1rem;">
+          <button id="generateRoutineBtn" style="width:100%; display:none;">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>&nbsp; Generate My Routine
+          </button>
+          <p id="generateRoutineHint" style="color:var(--muted); text-align:center; margin:0.5rem 0 0;">
+            Chat a bit more (skin type, concerns, budget) — then generate your routine here.
+          </p>
+        </div>
+
+        <p class="disclaimer">
+          This assistant only discusses skincare and ingredients. It does not provide medical
+          diagnoses. please see a dermatologist for persistent or severe skin issues.
+        </p>
+      </div>
+    </div>
+
+    <div class="form-column">
+      <div class="card quick-profile-card">
+        <h3>Quick Profile — Skip the Chat</h3>
+        <p style="color:var(--muted); margin-top:-0.4rem;">Fast-track your routine: fill the essentials and get personalized recommendations plus a morning/day/night routine.</p>
+        <form id="profileForm">
+          <label>Skin type</label>
+          <select name="skinType" required>
+            <option value="">Select...</option>
+            <option value="dry">Dry</option>
+            <option value="oily">Oily</option>
+            <option value="combination">Combination</option>
+            <option value="sensitive">Sensitive</option>
+            <option value="normal">Normal</option>
+          </select>
+
+          <label>Primary concerns (comma-separated)</label>
+          <input type="text" name="concerns" placeholder="acne, hydration" />
+
+          <label>Allergies / ingredients to avoid</label>
+          <input type="text" name="allergies" placeholder="fragrance" />
+
+          <label>Budget (LKR, max per product)</label>
+          <input type="number" name="budget" placeholder="3000" required />
+
+          <div class="checkbox-row">
+            <input type="checkbox" name="fragranceFree" id="fragranceFree" />
+            <label for="fragranceFree">Fragrance-free only</label>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" name="veganOnly" id="veganOnly" />
+            <label for="veganOnly">Vegan only</label>
+          </div>
+
+          <button type="submit" id="quickProfileSubmit">Get Recommendations & Routine</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <h3>Smart Skincare Advisor</h3>
+    <p>Personalized ingredient-based skincare recommendations.</p>
+    <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

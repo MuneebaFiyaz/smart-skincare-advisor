@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Profile - Smart Skincare Advisor</title>
+<link rel="stylesheet" href="css/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+  <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+  <main class="profile-page-shell">
+    <div class="profile-shell">
+      <section class="profile-hero card">
+        <div class="profile-hero__content">
+          <div class="profile-hero__badge">
+            <i class="fa-solid fa-user-check"></i>
+            Skin profile
+          </div>
+          <h2>My Skincare Profile</h2>
+          <p>
+            This information is used to generate your personalized product recommendations,
+            routine plan, and ingredient checks.
+          </p>
+        </div>
+
+        <div class="profile-quick-stats">
+          <div class="stat-pill">
+            <span class="stat-label">Skin type</span>
+            <strong id="profileSkinType">Not set</strong>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Budget</span>
+            <strong id="profileBudget">Not set</strong>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Focus areas</span>
+            <strong id="profileFocusAreas">Not set</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-main card">
+        <form id="profileForm" class="profile-form">
+          <div class="profile-form-grid">
+            <div class="field-group field-group--full">
+              <label>Skin type</label>
+              <select name="skinType" required>
+                <option value="">Select...</option>
+                <option value="dry">Dry</option>
+                <option value="oily">Oily</option>
+                <option value="combination">Combination</option>
+                <option value="sensitive">Sensitive</option>
+                <option value="normal">Normal</option>
+              </select>
+            </div>
+
+            <div class="field-group field-group--full">
+              <label>Primary concerns (comma-separated)</label>
+              <input type="text" name="concerns" placeholder="acne, aging, texture" />
+            </div>
+
+            <div class="field-group field-group--full">
+              <label>Allergies / ingredients to avoid (comma-separated)</label>
+              <input type="text" name="allergies" placeholder="fragrance, niacinamide, salicylic acid" />
+            </div>
+
+            <div class="field-group">
+              <label>Budget (LKR, max per product)</label>
+              <input type="number" name="budget" placeholder="3000" />
+            </div>
+
+            <div class="field-group">
+              <label>Current routine goal</label>
+              <input type="text" value="Hydration + glow + barrier support" readonly />
+            </div>
+          </div>
+
+          <div class="preferences-panel">
+            <h3>Preferences</h3>
+            <div class="checkbox-grid">
+              <label class="checkbox-row" for="fragranceFree">
+                <input type="checkbox" name="fragranceFree" id="fragranceFree" />
+                <span>Fragrance-free only</span>
+              </label>
+              <label class="checkbox-row" for="veganOnly">
+                <input type="checkbox" name="veganOnly" id="veganOnly" />
+                <span>Vegan only</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="profileMessage" class="profile-message"></div>
+
+          <div class="profile-actions">
+            <button type="submit" class="primary-btn profile-submit-btn">Save Profile</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="profile-why card">
+        <h3>Why this matters</h3>
+        <div class="profile-insights">
+          <div class="insight-box">
+            <i class="fa-solid fa-seedling"></i>
+            <div>
+              <strong>Ingredient match</strong>
+              <span>We use your skin goals and sensitivities to suggest suitable products.</span>
+            </div>
+          </div>
+          <div class="insight-box">
+            <i class="fa-solid fa-wallet"></i>
+            <div>
+              <strong>Budget fit</strong>
+              <span>Products are filtered to match your spend range without overshooting.</span>
+            </div>
+          </div>
+          <div class="insight-box">
+            <i class="fa-solid fa-shield-heart"></i>
+            <div>
+              <strong>Barrier safe</strong>
+              <span>We avoid ingredients that may conflict with your allergy or sensitivity profile.</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="btn profile-recommend-btn" href="chatbot.html">Get Recommendations Based on This Profile</a>
+      </section>
+    </div>
+  </main>
+
+  <a href="chatbot.html" class="chatbot-button" title="Start Consultation">
+    <i class="fa-solid fa-comments"></i>
+  </a>
+
+  <footer>
+    <h3>Smart Skincare Advisor</h3>
+    <p>Personalized ingredient-based skincare recommendations.</p>
+    <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
+

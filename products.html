@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Products - Smart Skincare Advisor</title>
+<link rel="stylesheet" href="css/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+  <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+  <main class="products-main">
+    <div class="products-header-wrap">
+      <h2>Browse Products</h2>
+      <div class="products-toolbar">
+        <div class="filter-group filter-group--category">
+          <label>Category</label>
+          <div class="category-filter-options" role="group" aria-label="Filter by category">
+            <button class="category-filter-btn is-active" type="button" data-category="" aria-pressed="true">All</button>
+            <button class="category-filter-btn" type="button" data-category="cleanser" aria-pressed="false">Cleanser</button>
+            <button class="category-filter-btn" type="button" data-category="treatment" aria-pressed="false">Treatment</button>
+            <button class="category-filter-btn" type="button" data-category="moisturizer" aria-pressed="false">Moisturizer</button>
+            <button class="category-filter-btn" type="button" data-category="sunscreen" aria-pressed="false">Sunscreen</button>
+          </div>
+          <select id="categoryFilter" hidden aria-hidden="true">
+            <option value="">All</option>
+            <option value="cleanser">Cleanser</option>
+            <option value="treatment">Treatment</option>
+            <option value="moisturizer">Moisturizer</option>
+            <option value="sunscreen">Sunscreen</option>
+          </select>
+        </div>
+
+        <div class="filter-group filter-group--search">
+          <label for="productSearch">Search</label>
+          <input id="productSearch" type="search" placeholder="Name, brand or ingredient" />
+        </div>
+
+        <div class="filter-group">
+          <label for="skinTypeFilter">Skin type</label>
+          <select id="skinTypeFilter">
+            <option value="">All skins</option>
+            <option value="dry">Dry</option>
+            <option value="oily">Oily</option>
+            <option value="combination">Combination</option>
+            <option value="sensitive">Sensitive</option>
+            <option value="normal">Normal</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="priceFilter">Price</label>
+          <select id="priceFilter">
+            <option value="">Any price</option>
+            <option value="0-2000">Under LKR 2,000</option>
+            <option value="2000-4000">LKR 2,000 - 4,000</option>
+            <option value="4000-7000">LKR 4,000 - 7,000</option>
+            <option value="7000-999999">Above LKR 7,000</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="brandFilter">Brand</label>
+          <select id="brandFilter">
+            <option value="">All brands</option>
+          </select>
+        </div>
+
+        <div class="filter-group filter-group--small">
+          <label for="sortFilter">Sort</label>
+          <select id="sortFilter">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </div>
+
+        <button id="clearFiltersBtn" class="secondary-btn filter-clear-btn" type="button">Clear</button>
+      </div>
+    </div>
+
+    <div id="productGrid" class="product-grid"></div>
+  </main>
+
+  <a href="chatbot.html" class="chatbot-button" title="Start Consultation">
+    <i class="fa-solid fa-comments"></i>
+  </a>
+
+  <footer>
+    <h3>Smart Skincare Advisor</h3>
+    <p>Personalized ingredient-based skincare recommendations.</p>
+    <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>
+

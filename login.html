@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In - Smart Skincare Advisor</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Ahona logo" class="nav-logo-img" />
+            </a>
+            </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <!-- LUXURY LOGIN SECTION -->
+    <main class="login-split-container">
+        <!-- Left Side: Branding -->           
+        <section class="login-welcome-side">
+            <div class="welcome-text-content">
+                <h1 class="serif-title">Welcome back to Ahona.</h1>
+                <p>Sign in to access your skincare profile, saved details, and a smooth checkout experience.</p>
+            </div>
+
+              <div class="mini-features">
+                <!-- Box 1: Compatibility -->
+                <div class="mini-card">
+                    <strong>Compatibility</strong>
+                    <span>Checker for ingredients</span>
+                </div>
+
+                <!-- Box 2: Routine -->
+                <div class="mini-card">
+                    <strong>Routine Maker</strong>
+                    <span>Build your daily glow</span>
+                </div>
+
+                <!-- Box 3: AI Bot -->
+                <div class="mini-card">
+                    <strong>AI Consultation</strong>
+                    <span>24/7 Smart Chatbot</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Side: The Form Card -->
+        <section class="login-form-side">
+            <div class="ahona-card">
+                <span class="form-tag">LOGIN</span>
+                <h2 class="serif-title">Login to your account</h2>
+                <p class="form-subtitle">Use the email and password you entered on the register page.</p>
+
+                <div class="social-login-row">
+                    <button type="button" class="social-btn google-btn"><i class="fa-brands fa-google"></i> Continue with Google</button>
+                    <button type="button" class="social-btn facebook-btn"><i class="fa-brands fa-facebook-f"></i> Continue with Facebook</button>
+                </div>
+
+                <div class="or-divider"><span>OR</span></div>
+
+                <form id="loginForm">
+                    <div class="input-group-luxury">
+                        <label>Email Address</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-at"></i>
+                            <input type="email" name="email" placeholder="Enter your email address" required />
+                        </div>
+                    </div>
+
+                    <div class="input-group-luxury password-group">
+                        <label>Password</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-solid fa-hashtag"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required />
+                            <button type="button" class="toggle-text" onclick="togglePassword()">Show</button>
+                        </div>
+                    </div>
+
+                    <div class="form-help-row">
+                        <label class="check-label"><input type="checkbox"> Remember me</label>
+                        <a href="#" class="forgot-pass">Forgot Password?</a>
+                    </div>
+
+                    <div id="loginError" class="signup-message"></div>
+
+                    <button type="submit" class="avenza-btn">Log In</button>
+                </form>
+
+                <p class="switch-auth">
+                    New to Ahona? <a href="signup.html">Register here</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>Smart Skincare Advisor</h3>
+        <p>Personalized ingredient-based skincare recommendations.</p>
+        <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        function togglePassword() {
+            const passInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-text');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                toggleBtn.innerText = "Hide";
+            } else {
+                passInput.type = "password";
+                toggleBtn.innerText = "Show";
+            }
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Ahona</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .admin-tab-btn {
+            background: var(--card); color: var(--heading); border: 1px solid var(--border);
+            box-shadow: none; font-weight: 500;
+        }
+        .admin-tab-btn.active { background: var(--heading); color: #fff; }
+        .admin-stat-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .admin-stat-card {
+            display: flex;
+            min-width: 0;
+            min-height: 132px;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.1rem 1.2rem;
+            background: linear-gradient(145deg, #fff, #fbf8f2);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--sage);
+            border-radius: 12px;
+            text-align: left;
+            box-shadow: 0 5px 16px var(--shadow);
+        }
+        .admin-stat-card:nth-child(2) { border-top-color: var(--primary-dark); }
+        .admin-stat-card:nth-child(3) { border-top-color: #d9b35f; }
+        .admin-stat-card:nth-child(4) { border-top-color: #7195a8; }
+        .admin-stat-card:nth-child(5) { border-top-color: #c77b66; }
+        .admin-stat-card .stat-value { font-size: 2rem; line-height: 1.1; font-weight: 700; color: var(--heading); overflow-wrap: anywhere; }
+        .admin-stat-card .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+        .admin-stat-card:last-child .stat-value { font-size: clamp(1.15rem, 1.5vw, 1.7rem); }
+        @media (max-width: 900px) { .admin-stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 560px) { .admin-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; } }
+        @media (max-width: 360px) { .admin-stat-grid { grid-template-columns: 1fr; } }
+        table.admin-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        table.admin-table th, table.admin-table td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--border); }
+        table.admin-table th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .admin-badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.72rem; font-weight: 600; }
+        .admin-badge.admin { background: #e8ede4; color: var(--sage-dark, #6d7d62); }
+        .admin-badge.user { background: var(--bg-secondary); color: var(--muted); }
+        .admin-action-btn { padding: 0.3rem 0.7rem; font-size: 0.75rem; margin: 0; }
+        .admin-table-wrap { overflow-x: auto; }
+        .category-products-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.45rem 0.85rem;
+            margin: 0;
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            background: var(--primary-dark);
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.2;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .category-products-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        .category-products-btn:focus-visible {
+            outline: 2px solid var(--heading);
+            outline-offset: 2px;
+        }
+        .admin-dashboard-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 1.6rem 1.8rem;
+            border-left: 5px solid var(--primary-dark);
+            background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(246,234,212,0.72));
+        }
+        .admin-dashboard-hero h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            margin: 0 0 0.45rem;
+            color: var(--heading);
+            font-size: 1.55rem;
+            text-align: center;
+        }
+        .admin-dashboard-hero h2 i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.35rem;
+            height: 2.35rem;
+            border-radius: 12px;
+            background: var(--heading);
+            color: #fff;
+            font-size: 1rem;
+        }
+        .admin-dashboard-hero p {
+            margin: 0;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--muted);
+            line-height: 1.55;
+            text-align: center;
+        }
+        .admin-chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        .admin-chart-card { min-width: 0; margin: 0; }
+        .admin-chart-wrap { position: relative; width: 100%; height: 280px; }
+        .admin-chart-wrap canvas { max-width: 100%; }
+        .category-breakdown-row {
+            display: grid;
+            grid-template-columns: minmax(100px, 0.8fr) minmax(90px, 2fr) auto auto;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .category-breakdown-row:last-child { border-bottom: 0; }
+        .category-breakdown-name { color: var(--heading); font-weight: 600; text-transform: capitalize; }
+        .category-breakdown-track { height: 9px; overflow: hidden; background: #f1ece4; border-radius: 999px; }
+        .category-breakdown-fill { display: block; width: var(--category-share); height: 100%; background: var(--category-color); border-radius: inherit; }
+        .category-breakdown-count { color: var(--heading); font-weight: 700; white-space: nowrap; }
+        .category-breakdown-count small { margin-left: 0.25rem; color: var(--muted); font-weight: 500; }
+        @media (max-width: 560px) {
+            .category-breakdown-row { grid-template-columns: minmax(90px, 1fr) auto auto; gap: 0.55rem; }
+            .category-breakdown-track { grid-column: 1 / -1; grid-row: 2; }
+            .category-breakdown-row .category-products-btn { grid-column: 3; grid-row: 1; }
+        }
+        @media (max-width: 520px) { .admin-chart-wrap { height: 240px; } }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html" class="logo-image-link">
+                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chatbot.html">Consultation</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="routine.html">Routine</a></li>
+                <li><a href="compatibility.html">Compatibility</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icons">
+            <span id="navAuthLinks"></span>
+        </div>
+    </header>
+
+    <main>
+            <div class="card admin-dashboard-hero">
+            <h2>Admin Dashboard</h2>
+            <p style="color:var(--muted);">
+                Monitor users, products, and shopping activity across the whole site from here.
+            </p>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" data-tab="overview">Overview</button>
+            <button class="admin-tab-btn" data-tab="users">Users</button>
+            <button class="admin-tab-btn" data-tab="products">Products</button>
+        </div>
+
+        <div id="tab-overview" class="admin-tab-panel">
+            <div id="statGrid" class="admin-stat-grid"><p>Loading stats...</p></div>
+            <div class="admin-chart-grid">
+                <section class="card admin-chart-card">
+                    <h3>Dashboard Counts</h3>
+                    <div class="admin-chart-wrap"><canvas id="overviewChart" role="img" aria-label="Bar chart comparing registered users, admins, products, and active carts"></canvas></div>
+                </section>
+            </div>
+            <div class="card">
+                <h3>Product Category Breakdown</h3>
+                <div id="categoryBreakdown"><p>Loading...</p></div>
+            </div>
+        </div>
+
+        <div id="tab-users" class="admin-tab-panel" style="display:none;">
+            <div class="card">
+                <h3>All Registered Users</h3>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="usersTable">
+                        <thead>
+                            <tr><th>Name</th><th>Email</th><th>Skin Type</th><th>Role</th><th>Joined</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-products" class="admin-tab-panel" style="display:none;">
+            <div class="card">
+                <h3>Add or Update Product</h3>
+                <p style="color:var(--muted);">
+                    Create new products here, or edit an existing one below. For product photos, use the <a href="admin.html">Image Manager</a> or paste an image URL in the form below.
+                </p>
+
+                <form id="productForm">
+                    <input type="hidden" id="productId" name="productId" />
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                        <label>
+                            Product name
+                            <input type="text" name="name" required />
+                        </label>
+                        <label>
+                            Brand
+                            <input type="text" name="brand" required />
+                        </label>
+                        <label>
+                            Price (LKR)
+                            <input type="number" name="price" min="0" step="1" required />
+                        </label>
+                        <label>
+                            Category
+                            <select name="category" required>
+                                <option value="cleanser">Cleanser</option>
+                                <option value="treatment">Treatment</option>
+                                <option value="moisturizer">Moisturizer</option>
+                                <option value="sunscreen">Sunscreen</option>
+                            </select>
+                        </label>
+                        <label style="grid-column: 1 / -1;">
+                            Ingredients (comma separated)
+                            <input type="text" name="ingredients" placeholder="niacinamide, hyaluronic acid" />
+                        </label>
+                        <label style="grid-column: 1 / -1;">
+                            Suitable skin types (comma separated)
+                            <input type="text" name="skinTypes" placeholder="dry, oily, sensitive" />
+                        </label>
+                        <label style="grid-column: 1 / -1;">
+                            Target concerns (comma separated)
+                            <input type="text" name="concerns" placeholder="acne, hydration" />
+                        </label>
+                        <label style="grid-column: 1 / -1;">
+                            Image URL
+                            <input type="url" name="imageUrl" placeholder="https://example.com/product.jpg" />
+                        </label>
+                        <label style="grid-column: 1 / -1;">
+                            Description
+                            <textarea name="description" rows="3" placeholder="Short product description"></textarea>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" name="fragranceFree" />
+                            Fragrance free
+                        </label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" name="vegan" />
+                            Vegan
+                        </label>
+                    </div>
+                    <div style="display:flex; gap:0.75rem; align-items:center; margin-top:1rem; flex-wrap:wrap;">
+                        <button type="submit" id="productSubmitBtn">Save Product</button>
+                        <button type="button" class="secondary-btn" id="cancelEditBtn" style="display:none;">Cancel Edit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>All Products</h3>
+                <input type="text" id="productSearchBox" placeholder="Search products by name..." />
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="productsTable">
+                        <thead>
+                            <tr><th>Name</th><th>Brand</th><th>Category</th><th>Price (LKR)</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody><tr><td colspan="5">Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <a href="chatbot.html" class="chatbot-button" title="Start Consultation">
+        <i class="fa-solid fa-comments"></i>
+    </a>
+
+    <footer>
+        <h3>Smart Skincare Advisor</h3>
+        <p>Personalized ingredient-based skincare recommendations.</p>
+        <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+
+</html>
