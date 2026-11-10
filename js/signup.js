@@ -7,10 +7,10 @@ if (isLoggedIn()) {
 
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  
+
   // Reset message state
   signupError.textContent = '';
-  signupError.className = 'signup-message'; 
+  signupError.className = 'signup-message';
 
   const formData = new FormData(signupForm);
   const payload = {
@@ -25,7 +25,7 @@ signupForm.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    
+
     const data = await res.json();
 
     if (!res.ok) {

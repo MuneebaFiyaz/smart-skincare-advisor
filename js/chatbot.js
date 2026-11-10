@@ -12,21 +12,19 @@ const chatCategoryFilters = document.querySelectorAll('.chat-filter-btn');
 
 const CHAT_STORAGE_KEY = 'ssa_chat_history';
 
-let history = []; // [{ role: 'user'|'model', text: '...' }]
+let chatHistory = [];
 let allChatProducts = [];
 let activeProductCategory = 'all';
 
-// Show the "Generate Routine" button once there's been a bit of back-and-forth —
-// enough that Gemini has something real to extract from.
-const MIN_EXCHANGES_BEFORE_GENERATE = 2; // user+bot pairs
+const MIN_EXCHANGES_BEFORE_GENERATE = 2;
 
 function saveHistory() {
-  localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(history));
+  localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chatHistory));
 }
 
 function clearHistory() {
   localStorage.removeItem(CHAT_STORAGE_KEY);
-  history = [];
+  chatHistory = [];
   chatWindow.innerHTML = '';
   generateRoutineBtn.style.display = 'none';
   addBubble("Hello. I'm your skincare assistant.", 'bot');
@@ -146,13 +144,12 @@ function showTyping(visible) {
 }
 
 function updateGenerateButtonVisibility() {
-  const exchanges = Math.floor(history.length / 2);
+  const exchanges = Math.floor(chatHistory.length / 2);
   if (exchanges >= MIN_EXCHANGES_BEFORE_GENERATE) {
     generateRoutineBtn.style.display = 'block';
   }
 }
 
-// Restore a previous conversation if one exists, otherwise show the greeting
 function restoreOrGreet() {
   const saved = localStorage.getItem(CHAT_STORAGE_KEY);
 
@@ -160,8 +157,8 @@ function restoreOrGreet() {
     try {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        history = parsed;
-        history.forEach((entry) => {
+        chatHistory = parsed;
+        chatHistory.forEach((entry) => {
           addBubble(entry.text, entry.role === 'model' ? 'bot' : 'user');
         });
         updateGenerateButtonVisibility();
@@ -181,7 +178,6 @@ function restoreOrGreet() {
   ]);
 }
 
-// Render a bot bubble that includes clickable option buttons (skin types)
 function addBotOptions(text, options, onSelect = handleSkinSelection) {
   const row = document.createElement('div');
   row.className = 'chat-row';
@@ -252,23 +248,20 @@ function handleSkinSelection(selections) {
   const primarySelection = selections[0];
   const labels = selections.map((selection) => selection.label);
 
-  // Add user's selection to chat and history
   addBubble(labels.join(' + '), 'user');
-  history.push({ role: 'user', text: labels.join(', ') });
+  chatHistory.push({ role: 'user', text: labels.join(', ') });
   saveHistory();
 
-  // Prefill the quick profile form select if present
   const skinTypeField = profileForm.elements.skinType;
   if (skinTypeField) skinTypeField.value = primarySelection.value;
 
-  // Simulate a short bot reply / follow-up question
   showTyping(true);
   sendBtn.disabled = true;
   setTimeout(() => {
     showTyping(false);
     const reply = 'Thank you. What is your main skin concern?';
     addBubble(reply, 'bot');
-    history.push({ role: 'model', text: reply });
+    chatHistory.push({ role: 'model', text: reply });
     saveHistory();
     addBotOptions('Choose the main concern you would like to focus on:', [
       { label: 'Acne', value: 'acne' },
@@ -288,15 +281,14 @@ function handleConcernSelection(selections) {
   concernsField.value = concern.value;
 
   addBubble(concern.label, 'user');
-  history.push({ role: 'user', text: concern.value ? `My main concern is ${concern.value}.` : 'I do not have a specific skin concern.' });
+  chatHistory.push({ role: 'user', text: concern.value ? `My main concern is ${concern.value}.` : 'I do not have a specific skin concern.' });
   const reply = 'Got it. You can add allergies, products you use, or a budget in the chat—or generate your routine now.';
   addBubble(reply, 'bot');
-  history.push({ role: 'model', text: reply });
+  chatHistory.push({ role: 'model', text: reply });
   saveHistory();
   updateGenerateButtonVisibility();
 }
 
-// Render an error-style bot bubble with a Retry button that resends `lastUserMessage`.
 function addErrorBubble(errorText, lastUserMessage) {
   const row = document.createElement('div');
   row.className = 'chat-row';
@@ -317,7 +309,7 @@ function addErrorBubble(errorText, lastUserMessage) {
   const retryBtn = bubble.querySelector('.retry-btn');
   retryBtn.addEventListener('click', () => {
     retryBtn.disabled = true;
-    // pass the bubble row into sendMessage so it can update/remove it
+    // pass the bubble row into sendMessage so it can update the bubble with a "Retrying..." message
     sendMessage(lastUserMessage, row);
   });
 }
@@ -326,15 +318,12 @@ restoreOrGreet();
 loadChatProducts();
 
 startOverBtn.addEventListener('click', () => {
-  if (history.length > 0 && !confirm('Start a new conversation? This will clear your current chat.')) {
+  if (chatHistory.length > 0 && !confirm('Start a new conversation? This will clear your current chat.')) {
     return;
   }
   clearHistory();
 });
 
-// Send a message to the chatbot. If `errorBubble` is provided this is a retry
-// from an existing error bubble; the function will reuse that element instead
-// of adding another user bubble.
 async function sendMessage(overrideMessage, errorBubble) {
   const isRetry = typeof overrideMessage === 'string' && overrideMessage.length > 0;
   const message = isRetry ? overrideMessage : chatInput.value.trim();
@@ -344,7 +333,7 @@ async function sendMessage(overrideMessage, errorBubble) {
     addBubble(message, 'user');
     chatInput.value = '';
   } else if (errorBubble) {
-    // visually mark retrying state inside the error bubble
+
     const retryBtn = errorBubble.querySelector('.retry-btn');
     if (retryBtn) retryBtn.disabled = true;
     errorBubble.querySelector('.chat-bubble').innerHTML = '<p>Retrying…</p>';
@@ -357,16 +346,14 @@ async function sendMessage(overrideMessage, errorBubble) {
     const res = await fetch('/api/chatbot', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, history }),
+      body: JSON.stringify({ message, history: chatHistory }),
     });
     const data = await res.json();
 
     showTyping(false);
 
     if (data.error) {
-      // show an error bubble (with retry) instead of a plain message
       if (errorBubble) {
-        // restore error content and re-enable retry
         errorBubble.querySelector('.chat-bubble').innerHTML = '<p>Sorry, something went wrong talking to the assistant. Please try again in a moment.</p>';
         const retryBtn = errorBubble.querySelector('.retry-btn');
         if (retryBtn) retryBtn.disabled = false;
@@ -377,13 +364,11 @@ async function sendMessage(overrideMessage, errorBubble) {
       return;
     }
 
-    // on success: if we retried from an errorBubble, remove it before adding reply
     if (errorBubble && errorBubble.parentNode) errorBubble.parentNode.removeChild(errorBubble);
 
     addBubble(data.reply, 'bot');
-    // ensure the user message and model reply are saved to history
-    history.push({ role: 'user', text: message });
-    history.push({ role: 'model', text: data.reply });
+    chatHistory.push({ role: 'user', text: message });
+    chatHistory.push({ role: 'model', text: data.reply });
     saveHistory();
     updateGenerateButtonVisibility();
   } catch (err) {
@@ -418,9 +403,7 @@ chatCategoryFilters.forEach((button) => {
   });
 });
 
-// "Generate My Routine" — reads back over the chat, asks the server to distill
-// it into a structured profile, then runs the same /api/recommend flow the
-// quick-profile form uses, and lands on the Routine page with results ready.
+//Routine
 generateRoutineBtn.addEventListener('click', async () => {
   generateRoutineBtn.disabled = true;
   generateRoutineBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>&nbsp; Reading your answers...';
@@ -429,7 +412,7 @@ generateRoutineBtn.addEventListener('click', async () => {
     const extractRes = await fetch('/api/chatbot/extract-profile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ history }),
+      body: JSON.stringify({ history: chatHistory }),
     });
     const extractData = await extractRes.json();
 
@@ -463,7 +446,6 @@ generateRoutineBtn.addEventListener('click', async () => {
   }
 });
 
-// Direct form path — bypasses the chatbot and calls /api/recommend right away
 profileForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const formData = new FormData(profileForm);

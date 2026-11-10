@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Consultation - Smart Skincare Advisor</title>
-<link rel="stylesheet" href="css/style.css" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultation - Smart Skincare Advisor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
+
 <body>
   <header>
-        <div class="logo">
-            <a href="index.html" class="logo-image-link">
-                <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
-            </a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="compatibility.html">Ingredients</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="routine.html">Your routine</a></li>
-                <li><a href="chatbot.html">Consultation</a></li>
-            </ul>
-        </nav>
-        <div class="nav-icons">
-            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
-            <span id="navAuthLinks"></span>
-        </div>
-    </header>
+    <div class="logo">
+      <a href="index.html" class="logo-image-link">
+        <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="compatibility.html">Ingredients</a></li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="routine.html">Your routine</a></li>
+        <li><a href="chatbot.html">Consultation</a></li>
+      </ul>
+    </nav>
+    <div class="nav-icons">
+      <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+      <span id="navAuthLinks"></span>
+    </div>
+  </header>
 
   <main class="chat-page">
     <div class="consultation-intro">
       <span class="consultation-eyebrow">PERSONALIZED SKINCARE</span>
       <h1>A routine that starts with your skin.</h1>
-      <p>Share a little about your skin and what you’re looking for. Chat through it or use the quick profile to get started.</p>
+      <p>Share a little about your skin and what you’re looking for. Chat through it or use the quick profile to get
+        started.</p>
     </div>
     <div class="chat-column">
       <div class="chat-card">
@@ -54,13 +59,15 @@
         <div id="chatWindow" class="chat-window"></div>
 
         <div id="typingIndicator" class="typing-indicator" style="display:none;">
-          <div class="chat-avatar bot-avatar small"><img src="images/chatbot-avatar.png" alt="" aria-hidden="true" /></div>
+          <div class="chat-avatar bot-avatar small"><img src="images/chatbot-avatar.png" alt="" aria-hidden="true" />
+          </div>
           <div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
 
         <div class="chat-input-row">
           <input id="chatInput" type="text" placeholder="Type your message..." autocomplete="off" />
-          <button id="sendBtn" class="send-btn" title="Send" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button>
+          <button id="sendBtn" class="send-btn" title="Send" aria-label="Send message"><i
+              class="fa-solid fa-paper-plane"></i></button>
         </div>
 
         <div style="padding: 0 1.3rem 1rem;">
@@ -71,7 +78,8 @@
 
         <aside class="disclaimer chat-disclaimer" role="note" aria-label="Skincare disclaimer">
           <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-          <p><strong>Skincare disclaimer</strong>For general skincare information only not medical advice or a diagnosis. Please consult a dermatologist about persistent or severe skin concerns.</p>
+          <p><strong>Skincare disclaimer</strong>For general skincare information only not medical advice or a
+            diagnosis. Please consult a dermatologist about persistent or severe skin concerns.</p>
         </aside>
       </div>
     </div>
@@ -80,7 +88,8 @@
       <div class="card quick-profile-card">
         <span class="profile-eyebrow">A QUICK START</span>
         <h2>Prefer a few quick details?</h2>
-        <p class="quick-profile-description">Tell us the essentials and we’ll suggest products and a simple morning and evening routine.</p>
+        <p class="quick-profile-description">Tell us the essentials and we’ll suggest products and a simple morning and
+          evening routine.</p>
         <form id="profileForm">
           <label>Skin type</label>
           <select name="skinType" required>
@@ -131,9 +140,12 @@
         <div class="chat-category-filters" role="group" aria-label="Filter products by category">
           <button type="button" class="chat-filter-btn active" data-category="all" aria-pressed="true">All</button>
           <button type="button" class="chat-filter-btn" data-category="cleanser" aria-pressed="false">Cleansers</button>
-          <button type="button" class="chat-filter-btn" data-category="treatment" aria-pressed="false">Treatments</button>
-          <button type="button" class="chat-filter-btn" data-category="moisturizer" aria-pressed="false">Moisturizers</button>
-          <button type="button" class="chat-filter-btn" data-category="sunscreen" aria-pressed="false">Sunscreens</button>
+          <button type="button" class="chat-filter-btn" data-category="treatment"
+            aria-pressed="false">Treatments</button>
+          <button type="button" class="chat-filter-btn" data-category="moisturizer"
+            aria-pressed="false">Moisturizers</button>
+          <button type="button" class="chat-filter-btn" data-category="sunscreen"
+            aria-pressed="false">Sunscreens</button>
         </div>
         <p id="chatProductCount" class="chat-product-count" aria-live="polite">Loading products...</p>
       </div>
@@ -157,10 +169,13 @@
         <a href="profile.html">Account</a>
       </nav>
     </div>
-    <div class="site-footer-bottom"><span>© 2026 Ahona Smart Skincare Advisor. All rights reserved.</span><div><a href="about.html">Disclaimer</a><a href="about.html">Contact</a></div></div>
+    <div class="site-footer-bottom"><span>© 2026 Ahona Smart Skincare Advisor. All rights reserved.</span>
+      <div><a href="about.html">Disclaimer</a><a href="about.html">Contact</a></div>
+    </div>
   </footer>
 
   <script src="js/auth.js"></script>
   <script src="js/chatbot.js"></script>
 </body>
+
 </html>

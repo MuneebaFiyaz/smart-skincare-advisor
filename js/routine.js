@@ -5,7 +5,7 @@ const clearRoutineBtn = document.getElementById('clearRoutineBtn'); // New butto
 
 function renderStoredResult() {
   const raw = localStorage.getItem('ssa_last_result');
-  
+
   // If no data exists, show the "No routine" message and hide the reset button
   if (!raw) {
     routineContainer.innerHTML = '<p>No routine generated yet. Go to <a href="chatbot.html">Consultation</a> first.</p>';

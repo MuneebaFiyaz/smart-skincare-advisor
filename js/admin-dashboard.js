@@ -15,7 +15,6 @@ tabButtons.forEach((btn) => {
   });
 });
 
-// ---------------- Overview ----------------
 let overviewChart;
 
 function renderDashboardCharts(data) {
@@ -104,7 +103,7 @@ async function loadStats() {
   }
 }
 
-// ---------------- Users ----------------
+//   Users  
 async function loadUsers() {
   const tbody = document.querySelector('#usersTable tbody');
   tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
@@ -134,16 +133,15 @@ async function loadUsers() {
           <td><span class="admin-badge ${u.isAdmin ? 'admin' : 'user'}">${u.isAdmin ? 'Admin' : 'User'}</span></td>
           <td>${new Date(u.createdAt).toLocaleDateString()}</td>
           <td style="white-space:nowrap;">
-            ${
-              me && me.id === u._id
-                ? '<span style="font-size:0.78rem; color:var(--muted);">(you)</span>'
-                : `
+            ${me && me.id === u._id
+          ? '<span style="font-size:0.78rem; color:var(--muted);">(you)</span>'
+          : `
               <button class="admin-action-btn toggle-admin-btn" data-id="${u._id}" data-current="${u.isAdmin}">
                 ${u.isAdmin ? 'Revoke Admin' : 'Make Admin'}
               </button>
               <button class="admin-action-btn delete-user-btn" data-id="${u._id}" style="background:#d9534f;">Delete</button>
             `
-            }
+        }
           </td>
         </tr>
       `)
@@ -196,7 +194,7 @@ async function deleteUser(userId) {
   }
 }
 
-// ---------------- Products ----------------
+//   Products  
 let allAdminProducts = [];
 const productForm = document.getElementById('productForm');
 const productIdInput = document.getElementById('productId');
@@ -358,7 +356,7 @@ document.getElementById('productSearchBox').addEventListener('input', (e) => {
   renderProductsTable(allAdminProducts.filter((p) => p.name.toLowerCase().includes(term)));
 });
 
-// ---------------- Carts ----------------
+//   Carts  
 async function loadCarts() {
   const container = document.getElementById('cartsList');
   container.innerHTML = '<p>Loading...</p>';

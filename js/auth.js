@@ -1,4 +1,4 @@
-// ---- Token storage ----
+//   Token storage  
 function getToken() {
   return localStorage.getItem('ssa_token');
 }
@@ -39,7 +39,6 @@ function logout() {
   window.location.href = 'login.html';
 }
 
-// Wrapper around fetch that automatically attaches the JWT and handles 401s
 async function authFetch(url, options = {}) {
   const token = getToken();
   const headers = {
@@ -59,7 +58,7 @@ async function authFetch(url, options = {}) {
   return res;
 }
 
-// Redirects to login if not authenticated — call at the top of pages that require login
+//Redirects to login if not authenticated  call at the top of pages that require login
 function requireLogin() {
   if (!isLoggedIn()) {
     window.location.href = 'login.html';
@@ -81,7 +80,7 @@ function requireUserCartAccess() {
   return true;
 }
 
-// Redirects away if the logged-in user isn't an admin — call at the top of admin pages
+//Redirects away if the logged-in user isn't an admin call at the top of admin pages
 function requireAdminAccess() {
   requireLogin();
   const user = getStoredUser();
@@ -90,8 +89,7 @@ function requireAdminAccess() {
   }
 }
 
-// Renders the right-side nav links depending on login state.
-// Expects a <span id="navAuthLinks"></span> placeholder in the header nav.
+//Renders the right-side nav links depending on login state.
 function renderAuthNav() {
   const slot = document.getElementById('navAuthLinks');
   if (!slot) return;
@@ -154,7 +152,6 @@ function addBackButton() {
 
 document.addEventListener('DOMContentLoaded', addBackButton);
 
-// Small site-wide toast for non-blocking messages
 function showToast(message, opts = {}) {
   const { type = 'success', duration = 3000, action } = opts;
   const toast = document.createElement('div');
@@ -178,14 +175,13 @@ function showToast(message, opts = {}) {
   }
 
   document.body.appendChild(toast);
-  // auto-remove
   setTimeout(() => {
     toast.classList.add('hide');
     setTimeout(() => toast.remove(), 300);
   }, duration);
 }
 
-// Update the cart item count badge in the navbar (shows total item quantities)
+// Update the cart item count 
 async function updateCartBadge() {
   const cartLink = document.querySelector('.nav-icons a[href="cart.html"]');
   if (!cartLink) return;
@@ -213,7 +209,6 @@ async function updateCartBadge() {
   }
 }
 
-// Run on load to initialize badge visibility
 document.addEventListener('DOMContentLoaded', () => {
   renderAuthNav();
   updateCartBadge();

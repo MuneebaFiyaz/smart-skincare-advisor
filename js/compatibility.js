@@ -1,6 +1,6 @@
 const productChecklist = document.getElementById('productChecklist');
 const checkBtn = document.getElementById('checkBtn');
-const resultArea = document.getElementById('resultArea'); // The right column
+const resultArea = document.getElementById('resultArea');
 const resultContent = document.getElementById('resultContent');
 
 // Load products into the checklist
@@ -32,7 +32,6 @@ async function loadProductChecklist() {
   }
 }
 
-// Handle Click Event
 checkBtn.addEventListener('click', async () => {
   const selected = Array.from(document.querySelectorAll('.product-checkbox:checked')).map((el) => el.value);
 
@@ -55,7 +54,6 @@ checkBtn.addEventListener('click', async () => {
     const data = await res.json();
 
     // Clear previous and render matches
-    // renderCompatibilityMatches is assumed to be defined in js/compat-render.js
     let html = renderCompatibilityMatches(
       data.conflicts,
       'No known conflicts among the selected products. ✅'
@@ -74,5 +72,4 @@ checkBtn.addEventListener('click', async () => {
   }
 });
 
-// Initialize only the checklist (Rules removed)
 loadProductChecklist();
