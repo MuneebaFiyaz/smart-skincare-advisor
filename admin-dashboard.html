@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Ahona</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
-        .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .admin-tabs { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .admin-tabs .category-products-btn { margin-left: auto; }
         .admin-tab-btn {
             background: var(--card); color: var(--heading); border: 1px solid var(--border);
             box-shadow: none; font-weight: 500;
@@ -52,8 +53,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 0.4rem;
             padding: 0.45rem 0.85rem;
             margin: 0;
+            max-width: 100%;
             border: 1px solid var(--primary-dark);
             border-radius: 5px;
             background: var(--primary-dark);
@@ -62,8 +65,63 @@
             font-weight: 600;
             line-height: 1.2;
             text-decoration: none;
-            white-space: nowrap;
+            white-space: normal;
             transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .admin-product-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+        .admin-product-heading h3 { margin: 0; }
+        .admin-product-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            gap: 1rem;
+        }
+        .admin-product-form-grid > label {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            gap: 0.4rem;
+            color: var(--heading);
+        }
+        .admin-product-form-grid input:not([type="checkbox"]),
+        .admin-product-form-grid select,
+        .admin-product-form-grid textarea {
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+        }
+        .admin-product-form-grid textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+        .admin-product-options {
+            display: flex;
+            grid-column: 1 / -1;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .admin-product-options label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-main);
+            color: var(--heading);
+            cursor: pointer;
+        }
+        .admin-product-options input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            margin: 0;
+            accent-color: var(--primary-dark);
         }
         .category-products-btn:hover {
             background: var(--primary);
@@ -131,6 +189,7 @@
         .category-breakdown-count { color: var(--heading); font-weight: 700; white-space: nowrap; }
         .category-breakdown-count small { margin-left: 0.25rem; color: var(--muted); font-weight: 500; }
         @media (max-width: 560px) {
+            .admin-tabs .category-products-btn { margin-left: 0; }
             .category-breakdown-row { grid-template-columns: minmax(90px, 1fr) auto auto; gap: 0.55rem; }
             .category-breakdown-track { grid-column: 1 / -1; grid-row: 2; }
             .category-breakdown-row .category-products-btn { grid-column: 3; grid-row: 1; }
@@ -149,11 +208,11 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="compatibility.html">Ingredients</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="routine.html">Your routine</a></li>
                 <li><a href="chatbot.html">Consultation</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="routine.html">Routine</a></li>
-                <li><a href="compatibility.html">Compatibility</a></li>
-                <li><a href="about.html">About</a></li>
             </ul>
         </nav>
         <div class="nav-icons">
@@ -205,14 +264,20 @@
 
         <div id="tab-products" class="admin-tab-panel" style="display:none;">
             <div class="card">
-                <h3>Add or Update Product</h3>
+                <div class="admin-product-heading">
+                    <h3>Add or Update Product</h3>
+                    <a class="category-products-btn admin-image-manager-btn" href="admin.html">
+                        <i class="fa-solid fa-images" aria-hidden="true"></i>
+                        Manage Product Images
+                    </a>
+                </div>
                 <p style="color:var(--muted);">
-                    Create new products here, or edit an existing one below. For product photos, use the <a href="admin.html">Image Manager</a> or paste an image URL in the form below.
+                    Create new products here, or edit an existing one below. Paste an image URL here or use the image manager to upload and replace product photos.
                 </p>
 
                 <form id="productForm">
                     <input type="hidden" id="productId" name="productId" />
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                    <div class="admin-product-form-grid">
                         <label>
                             Product name
                             <input type="text" name="name" required />
@@ -234,19 +299,19 @@
                                 <option value="sunscreen">Sunscreen</option>
                             </select>
                         </label>
-                        <label style="grid-column: 1 / -1;">
+                        <label>
                             Ingredients (comma separated)
                             <input type="text" name="ingredients" placeholder="niacinamide, hyaluronic acid" />
                         </label>
-                        <label style="grid-column: 1 / -1;">
+                        <label>
                             Suitable skin types (comma separated)
                             <input type="text" name="skinTypes" placeholder="dry, oily, sensitive" />
                         </label>
-                        <label style="grid-column: 1 / -1;">
+                        <label>
                             Target concerns (comma separated)
                             <input type="text" name="concerns" placeholder="acne, hydration" />
                         </label>
-                        <label style="grid-column: 1 / -1;">
+                        <label>
                             Image URL
                             <input type="url" name="imageUrl" placeholder="https://example.com/product.jpg" />
                         </label>
@@ -254,14 +319,16 @@
                             Description
                             <textarea name="description" rows="3" placeholder="Short product description"></textarea>
                         </label>
-                        <label style="display:flex; align-items:center; gap:0.5rem;">
-                            <input type="checkbox" name="fragranceFree" />
-                            Fragrance free
-                        </label>
-                        <label style="display:flex; align-items:center; gap:0.5rem;">
-                            <input type="checkbox" name="vegan" />
-                            Vegan
-                        </label>
+                        <div class="admin-product-options">
+                            <label>
+                                <input type="checkbox" name="fragranceFree" />
+                                Fragrance free
+                            </label>
+                            <label>
+                                <input type="checkbox" name="vegan" />
+                                Vegan
+                            </label>
+                        </div>
                     </div>
                     <div style="display:flex; gap:0.75rem; align-items:center; margin-top:1rem; flex-wrap:wrap;">
                         <button type="submit" id="productSubmitBtn">Save Product</button>
@@ -290,10 +357,21 @@
         <i class="fa-solid fa-comments"></i>
     </a>
 
-    <footer>
-        <h3>Smart Skincare Advisor</h3>
-        <p>Personalized ingredient-based skincare recommendations.</p>
-        <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+    <footer class="site-footer">
+        <div class="site-footer-main">
+            <div class="site-footer-brand">
+                <a href="index.html"><img src="images/logo.png" alt="Ahona Smart Skincare Advisor"></a>
+                <p>Personalized ingredient-based skincare guidance, made thoughtful.</p>
+            </div>
+            <nav class="site-footer-links" aria-label="Footer navigation">
+                <a href="products.html">Shop</a>
+                <a href="compatibility.html">Ingredients</a>
+                <a href="about.html">About us</a>
+                <a href="chatbot.html">Consultation</a>
+                <a href="profile.html">Account</a>
+            </nav>
+        </div>
+        <div class="site-footer-bottom"><span>© 2026 Ahona Smart Skincare Advisor. All rights reserved.</span><div><a href="about.html">Disclaimer</a><a href="about.html">Contact</a></div></div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>

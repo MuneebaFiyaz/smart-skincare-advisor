@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Consultation - Smart Skincare Advisor</title>
 <link rel="stylesheet" href="css/style.css" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
@@ -18,11 +18,11 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="compatibility.html">Ingredients</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="routine.html">Your routine</a></li>
                 <li><a href="chatbot.html">Consultation</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="routine.html">Routine</a></li>
-                <li><a href="compatibility.html">Compatibility</a></li>
-                <li><a href="about.html">About</a></li>
             </ul>
         </nav>
         <div class="nav-icons">
@@ -32,16 +32,21 @@
     </header>
 
   <main class="chat-page">
+    <div class="consultation-intro">
+      <span class="consultation-eyebrow">PERSONALIZED SKINCARE</span>
+      <h1>A routine that starts with your skin.</h1>
+      <p>Share a little about your skin and what you’re looking for. Chat through it or use the quick profile to get started.</p>
+    </div>
     <div class="chat-column">
       <div class="chat-card">
 
         <div class="chat-header">
-          <div class="chat-avatar bot-avatar"><i class="fa-solid fa-spa"></i></div>
+          <div class="chat-avatar bot-avatar"><img src="images/chatbot-avatar.png" alt="" aria-hidden="true" /></div>
           <div class="chat-header-text">
-            <h3>Ahona Assistant</h3>
-            <span class="chat-status"><span class="status-dot"></span> Online &middot; Skincare Consultation</span>
+            <h3>Your skincare guide</h3>
+            <span class="chat-status">Here to help you shape a routine</span>
           </div>
-          <button id="startOverBtn" title="Start a new conversation" style="margin-left:auto; background:rgba(255,255,255,0.2); box-shadow:none; padding:0.4rem 0.8rem; font-size:0.78rem;">
+          <button id="startOverBtn" class="chat-reset-btn" title="Start a new conversation">
             <i class="fa-solid fa-rotate-right"></i>&nbsp; Start Over
           </button>
         </div>
@@ -49,35 +54,33 @@
         <div id="chatWindow" class="chat-window"></div>
 
         <div id="typingIndicator" class="typing-indicator" style="display:none;">
-          <div class="chat-avatar bot-avatar small"><i class="fa-solid fa-spa"></i></div>
+          <div class="chat-avatar bot-avatar small"><img src="images/chatbot-avatar.png" alt="" aria-hidden="true" /></div>
           <div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
 
         <div class="chat-input-row">
           <input id="chatInput" type="text" placeholder="Type your message..." autocomplete="off" />
-          <button id="sendBtn" class="send-btn" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+          <button id="sendBtn" class="send-btn" title="Send" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
 
         <div style="padding: 0 1.3rem 1rem;">
           <button id="generateRoutineBtn" style="width:100%; display:none;">
             <i class="fa-solid fa-wand-magic-sparkles"></i>&nbsp; Generate My Routine
           </button>
-          <p id="generateRoutineHint" style="color:var(--muted); text-align:center; margin:0.5rem 0 0;">
-            Chat a bit more (skin type, concerns, budget) — then generate your routine here.
-          </p>
         </div>
 
-        <p class="disclaimer">
-          This assistant only discusses skincare and ingredients. It does not provide medical
-          diagnoses. please see a dermatologist for persistent or severe skin issues.
-        </p>
+        <aside class="disclaimer chat-disclaimer" role="note" aria-label="Skincare disclaimer">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <p><strong>Skincare disclaimer</strong>For general skincare information only not medical advice or a diagnosis. Please consult a dermatologist about persistent or severe skin concerns.</p>
+        </aside>
       </div>
     </div>
 
     <div class="form-column">
       <div class="card quick-profile-card">
-        <h3>Quick Profile — Skip the Chat</h3>
-        <p style="color:var(--muted); margin-top:-0.4rem;">Fast-track your routine: fill the essentials and get personalized recommendations plus a morning/day/night routine.</p>
+        <span class="profile-eyebrow">A QUICK START</span>
+        <h2>Prefer a few quick details?</h2>
+        <p class="quick-profile-description">Tell us the essentials and we’ll suggest products and a simple morning and evening routine.</p>
         <form id="profileForm">
           <label>Skin type</label>
           <select name="skinType" required>
@@ -111,12 +114,50 @@
         </form>
       </div>
     </div>
+
+    <section class="chat-products-section" aria-labelledby="chatProductsTitle">
+      <div class="chat-products-heading">
+        <div>
+          <span class="profile-eyebrow">PRODUCT CATALOG</span>
+          <h2 id="chatProductsTitle">Explore our skincare products</h2>
+        </div>
+      </div>
+      <div class="chat-catalog-tools">
+        <label class="chat-catalog-search">
+          <span class="sr-only">Search products</span>
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input id="chatProductSearch" type="search" placeholder="Search products or brands..." autocomplete="off" />
+        </label>
+        <div class="chat-category-filters" role="group" aria-label="Filter products by category">
+          <button type="button" class="chat-filter-btn active" data-category="all" aria-pressed="true">All</button>
+          <button type="button" class="chat-filter-btn" data-category="cleanser" aria-pressed="false">Cleansers</button>
+          <button type="button" class="chat-filter-btn" data-category="treatment" aria-pressed="false">Treatments</button>
+          <button type="button" class="chat-filter-btn" data-category="moisturizer" aria-pressed="false">Moisturizers</button>
+          <button type="button" class="chat-filter-btn" data-category="sunscreen" aria-pressed="false">Sunscreens</button>
+        </div>
+        <p id="chatProductCount" class="chat-product-count" aria-live="polite">Loading products...</p>
+      </div>
+      <div id="chatProductsGrid" class="product-grid" aria-live="polite">
+        <p>Loading products...</p>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <h3>Smart Skincare Advisor</h3>
-    <p>Personalized ingredient-based skincare recommendations.</p>
-    <p>&copy; 2026 Smart Skincare Advisor. All Rights Reserved.</p>
+  <footer class="site-footer">
+    <div class="site-footer-main">
+      <div class="site-footer-brand">
+        <a href="index.html"><img src="images/logo.png" alt="Ahona Smart Skincare Advisor"></a>
+        <p>Personalized ingredient-based skincare guidance, made thoughtful.</p>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer navigation">
+        <a href="products.html">Shop</a>
+        <a href="compatibility.html">Ingredients</a>
+        <a href="about.html">About us</a>
+        <a href="chatbot.html">Consultation</a>
+        <a href="profile.html">Account</a>
+      </nav>
+    </div>
+    <div class="site-footer-bottom"><span>© 2026 Ahona Smart Skincare Advisor. All rights reserved.</span><div><a href="about.html">Disclaimer</a><a href="about.html">Contact</a></div></div>
   </footer>
 
   <script src="js/auth.js"></script>

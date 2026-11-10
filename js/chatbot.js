@@ -4,12 +4,17 @@ const sendBtn = document.getElementById('sendBtn');
 const profileForm = document.getElementById('profileForm');
 const typingIndicator = document.getElementById('typingIndicator');
 const generateRoutineBtn = document.getElementById('generateRoutineBtn');
-const generateRoutineHint = document.getElementById('generateRoutineHint');
 const startOverBtn = document.getElementById('startOverBtn');
+const chatProductsGrid = document.getElementById('chatProductsGrid');
+const chatProductSearch = document.getElementById('chatProductSearch');
+const chatProductCount = document.getElementById('chatProductCount');
+const chatCategoryFilters = document.querySelectorAll('.chat-filter-btn');
 
 const CHAT_STORAGE_KEY = 'ssa_chat_history';
 
 let history = []; // [{ role: 'user'|'model', text: '...' }]
+let allChatProducts = [];
+let activeProductCategory = 'all';
 
 // Show the "Generate Routine" button once there's been a bit of back-and-forth —
 // enough that Gemini has something real to extract from.
@@ -24,7 +29,6 @@ function clearHistory() {
   history = [];
   chatWindow.innerHTML = '';
   generateRoutineBtn.style.display = 'none';
-  generateRoutineHint.style.display = 'block';
   addBubble("Hello. I'm your skincare assistant.", 'bot');
   addBotOptions('Please select your skin type.', [
     { label: 'Dry', value: 'dry' },
@@ -57,6 +61,63 @@ function renderMarkdown(text) {
   return `<p>${html}</p>`;
 }
 
+async function loadChatProducts() {
+  try {
+    const res = await fetch('/api/products');
+    const products = await res.json();
+    if (!res.ok) throw new Error(products.error || 'Could not load products');
+
+    allChatProducts = products;
+    renderChatProducts();
+  } catch (err) {
+    chatProductCount.textContent = 'Products unavailable';
+    chatProductsGrid.innerHTML = '<p>Could not load products. Please try again later.</p>';
+    console.error('Could not load consultation products:', err);
+  }
+}
+
+function renderChatProducts() {
+  const searchTerm = chatProductSearch.value.trim().toLowerCase();
+  const products = allChatProducts.filter((product) => {
+    const matchesCategory = activeProductCategory === 'all' || product.category === activeProductCategory;
+    const searchableText = `${product.name} ${product.brand} ${product.category}`.toLowerCase();
+    return matchesCategory && searchableText.includes(searchTerm);
+  });
+
+  chatProductCount.textContent = `${products.length} ${products.length === 1 ? 'product' : 'products'}`;
+  if (!products.length) {
+    chatProductsGrid.innerHTML = allChatProducts.length
+      ? '<p>No products match those filters. Try another search or category.</p>'
+      : '<p>No products are available right now. Please check back soon.</p>';
+    return;
+  }
+
+  chatProductsGrid.innerHTML = products
+      .map((product) => {
+        const id = encodeURIComponent(product._id);
+        const name = escapeHtml(product.name);
+        const brand = escapeHtml(product.brand || product.category || 'Skincare');
+        const image = product.imageUrl
+          ? `<img src="${escapeHtml(product.imageUrl)}" alt="${name}" loading="lazy" />`
+          : '<div class="product-image-slot"><i class="fa-solid fa-image" aria-hidden="true"></i>Image coming soon</div>';
+
+        return `
+          <article class="card product-card">
+            <a href="product-detail.html?id=${id}" style="text-decoration:none; color:inherit;">
+              ${image}
+              <span class="category-label">${brand}</span>
+              <h3>${name}</h3>
+              <div class="price">LKR ${Number(product.price).toLocaleString()}</div>
+            </a>
+            <a class="chat-product-view" href="product-detail.html?id=${id}">
+              <i class="fa-solid fa-eye" aria-hidden="true"></i> View product
+            </a>
+          </article>
+        `;
+      })
+      .join('');
+}
+
 function addBubble(text, sender) {
   const row = document.createElement('div');
   row.className = `chat-row ${sender === 'user' ? 'user-row' : ''}`;
@@ -64,7 +125,7 @@ function addBubble(text, sender) {
   if (sender === 'bot') {
     const avatar = document.createElement('div');
     avatar.className = 'chat-avatar small';
-    avatar.innerHTML = '<i class="fa-solid fa-spa"></i>';
+    avatar.innerHTML = '<img src="images/chatbot-avatar.png" alt="" aria-hidden="true">';
     row.appendChild(avatar);
   }
 
@@ -88,7 +149,6 @@ function updateGenerateButtonVisibility() {
   const exchanges = Math.floor(history.length / 2);
   if (exchanges >= MIN_EXCHANGES_BEFORE_GENERATE) {
     generateRoutineBtn.style.display = 'block';
-    generateRoutineHint.style.display = 'none';
   }
 }
 
@@ -122,13 +182,13 @@ function restoreOrGreet() {
 }
 
 // Render a bot bubble that includes clickable option buttons (skin types)
-function addBotOptions(text, options) {
+function addBotOptions(text, options, onSelect = handleSkinSelection) {
   const row = document.createElement('div');
   row.className = 'chat-row';
 
   const avatar = document.createElement('div');
   avatar.className = 'chat-avatar small';
-  avatar.innerHTML = '<i class="fa-solid fa-spa"></i>';
+  avatar.innerHTML = '<img src="images/chatbot-avatar.png" alt="" aria-hidden="true">';
   row.appendChild(avatar);
 
   const bubble = document.createElement('div');
@@ -149,7 +209,10 @@ function addBotOptions(text, options) {
     btn.textContent = opt.label;
     btn.addEventListener('click', () => {
       if (!allowMultiple) {
-        handleSkinSelection([{ value: opt.value, label: opt.label }]);
+        container.querySelectorAll('button').forEach((optionButton) => {
+          optionButton.disabled = true;
+        });
+        onSelect([{ value: opt.value, label: opt.label }]);
         return;
       }
 
@@ -195,10 +258,8 @@ function handleSkinSelection(selections) {
   saveHistory();
 
   // Prefill the quick profile form select if present
-  try {
-    const sel = document.querySelector('#profileForm select[name="skinType"]');
-    if (sel) sel.value = primarySelection.value;
-  } catch (e) {}
+  const skinTypeField = profileForm.elements.skinType;
+  if (skinTypeField) skinTypeField.value = primarySelection.value;
 
   // Simulate a short bot reply / follow-up question
   showTyping(true);
@@ -209,9 +270,30 @@ function handleSkinSelection(selections) {
     addBubble(reply, 'bot');
     history.push({ role: 'model', text: reply });
     saveHistory();
-    updateGenerateButtonVisibility();
+    addBotOptions('Choose the main concern you would like to focus on:', [
+      { label: 'Acne', value: 'acne' },
+      { label: 'Hydration', value: 'hydration' },
+      { label: 'Redness', value: 'redness' },
+      { label: 'Dark spots', value: 'dark spots' },
+      { label: 'Fine lines', value: 'fine lines' },
+      { label: 'No specific concern', value: '' },
+    ], handleConcernSelection);
     sendBtn.disabled = false;
   }, 700);
+}
+
+function handleConcernSelection(selections) {
+  const concern = selections[0];
+  const concernsField = profileForm.elements.concerns;
+  concernsField.value = concern.value;
+
+  addBubble(concern.label, 'user');
+  history.push({ role: 'user', text: concern.value ? `My main concern is ${concern.value}.` : 'I do not have a specific skin concern.' });
+  const reply = 'Got it. You can add allergies, products you use, or a budget in the chat—or generate your routine now.';
+  addBubble(reply, 'bot');
+  history.push({ role: 'model', text: reply });
+  saveHistory();
+  updateGenerateButtonVisibility();
 }
 
 // Render an error-style bot bubble with a Retry button that resends `lastUserMessage`.
@@ -221,7 +303,7 @@ function addErrorBubble(errorText, lastUserMessage) {
 
   const avatar = document.createElement('div');
   avatar.className = 'chat-avatar small';
-  avatar.innerHTML = '<i class="fa-solid fa-spa"></i>';
+  avatar.innerHTML = '<img src="images/chatbot-avatar.png" alt="" aria-hidden="true">';
   row.appendChild(avatar);
 
   const bubble = document.createElement('div');
@@ -241,6 +323,7 @@ function addErrorBubble(errorText, lastUserMessage) {
 }
 
 restoreOrGreet();
+loadChatProducts();
 
 startOverBtn.addEventListener('click', () => {
   if (history.length > 0 && !confirm('Start a new conversation? This will clear your current chat.')) {
@@ -321,6 +404,18 @@ async function sendMessage(overrideMessage, errorBubble) {
 sendBtn.addEventListener('click', sendMessage);
 chatInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') sendMessage();
+});
+chatProductSearch.addEventListener('input', renderChatProducts);
+chatCategoryFilters.forEach((button) => {
+  button.addEventListener('click', () => {
+    activeProductCategory = button.dataset.category;
+    chatCategoryFilters.forEach((filterButton) => {
+      const isActive = filterButton === button;
+      filterButton.classList.toggle('active', isActive);
+      filterButton.setAttribute('aria-pressed', String(isActive));
+    });
+    renderChatProducts();
+  });
 });
 
 // "Generate My Routine" — reads back over the chat, asks the server to distill

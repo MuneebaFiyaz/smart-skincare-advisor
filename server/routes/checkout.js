@@ -3,6 +3,7 @@ const Stripe = require('stripe');
 const crypto = require('crypto');
 const router = express.Router();
 const Cart = require('../models/Cart');
+const Order = require('../models/Order');
 const requireAuth = require('../middleware/auth');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -30,13 +31,44 @@ router.get('/session-status', requireAuth, async (req, res) => {
   }
 
   try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['line_items'],
+    });
     if (session.metadata?.userId !== String(req.userId)) {
       return res.status(404).json({ error: 'Checkout session not found.' });
     }
     if (session.mode !== 'payment' || session.status !== 'complete' || session.payment_status !== 'paid') {
       return res.status(409).json({ error: 'Payment has not been confirmed.' });
     }
+
+    const lineItems = session.line_items?.data || [];
+    if (
+      !lineItems.length ||
+      lineItems.some((item) => !Number.isFinite(item.price?.unit_amount) || !item.quantity)
+    ) {
+      return res.status(500).json({ error: 'Payment was confirmed, but order details could not be loaded.' });
+    }
+
+    await Order.findOneAndUpdate(
+      { checkoutSessionId: session.id },
+      {
+        $setOnInsert: {
+          user: req.userId,
+          checkoutSessionId: session.id,
+          status: 'paid',
+          items: lineItems.map((item) => ({
+            name: item.description || 'Product',
+            unitAmount: item.price.unit_amount,
+            quantity: item.quantity,
+            currency: item.currency || session.currency,
+          })),
+          totalAmount: session.amount_total,
+          currency: session.currency,
+          paidAt: new Date(),
+        },
+      },
+      { upsert: true, new: true, runValidators: true }
+    );
 
     const cart = await Cart.findOne({ user: req.userId });
     if (

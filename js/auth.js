@@ -100,13 +100,17 @@ function renderAuthNav() {
   document.querySelectorAll('a[href="cart.html"]').forEach((cartLink) => {
     cartLink.style.display = currentUser && currentUser.isAdmin ? 'none' : '';
   });
+  document.querySelectorAll('a[href="orders.html"]').forEach((ordersLink) => {
+    ordersLink.style.display = currentUser && currentUser.isAdmin ? 'none' : '';
+  });
 
   if (isLoggedIn()) {
     const user = currentUser;
     const profileTarget = user && user.isAdmin ? 'admin-dashboard.html' : 'profile.html';
     const profileLabel = user && user.isAdmin ? 'Admin' : (user ? user.name : 'Profile');
     slot.innerHTML = `
-      <span style="display:flex; align-items:center; gap:1.1rem;">
+      <span class="nav-auth-links">
+        ${user && !user.isAdmin ? '<a href="orders.html">Your Orders</a>' : ''}
         <a href="settings.html">Settings</a>
         <a href="#" id="logoutLink">Logout</a>
         <a href="${profileTarget}" class="nav-btn">${profileLabel}</a>
@@ -118,7 +122,7 @@ function renderAuthNav() {
     });
   } else {
     slot.innerHTML = `
-      <span style="display:flex; align-items:center; gap:1.1rem;">
+      <span class="nav-auth-links">
         <a href="login.html">Login</a>
         <a href="signup.html" class="nav-btn">Sign Up</a>
       </span>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Orders - Smart Skincare Advisor</title>
+<link rel="stylesheet" href="css/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html" class="logo-image-link">
+        <img src="images/logo.png" alt="Smart Skincare Advisor logo" class="nav-logo-img" />
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="compatibility.html">Ingredients</a></li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="routine.html">Your routine</a></li>
+        <li><a href="chatbot.html">Consultation</a></li>
+      </ul>
+    </nav>
+    <div class="nav-icons">
+      <a href="cart.html"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></a>
+      <span id="navAuthLinks"></span>
+    </div>
+  </header>
+
+  <main class="orders-page">
+    <section class="orders-header card">
+      <span class="orders-eyebrow"><i class="fa-solid fa-box-open" aria-hidden="true"></i> Purchase history</span>
+      <h1>Your Orders</h1>
+      <p>Keep track of your skincare purchases and payment details.</p>
+    </section>
+    <div id="ordersContainer" aria-live="polite"><p>Loading your orders...</p></div>
+  </main>
+
+  <a href="chatbot.html" class="chatbot-button" title="Start Consultation">
+    <i class="fa-solid fa-comments"></i>
+  </a>
+
+  <footer class="site-footer">
+    <div class="site-footer-main">
+      <div class="site-footer-brand">
+        <a href="index.html"><img src="images/logo.png" alt="Ahona Smart Skincare Advisor"></a>
+        <p>Personalized ingredient-based skincare guidance, made thoughtful.</p>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer navigation">
+        <a href="products.html">Shop</a>
+        <a href="compatibility.html">Ingredients</a>
+        <a href="about.html">About us</a>
+        <a href="chatbot.html">Consultation</a>
+        <a href="profile.html">Account</a>
+      </nav>
+    </div>
+    <div class="site-footer-bottom"><span>© 2026 Ahona Smart Skincare Advisor. All rights reserved.</span><div><a href="about.html">Disclaimer</a><a href="about.html">Contact</a></div></div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/orders.js"></script>
+</body>
+</html>

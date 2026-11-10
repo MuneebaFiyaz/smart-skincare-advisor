@@ -11,6 +11,7 @@ const compatibilityRouter = require('./routes/compatibility');
 const chatbotRouter = require('./routes/chatbot');
 const cartRouter = require('./routes/cart');
 const checkoutRouter = require('./routes/checkout');
+const ordersRouter = require('./routes/orders');
 const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
 const adminRouter = require('./routes/admin');
@@ -43,6 +44,7 @@ app.use('/api/compatibility', compatibilityRouter);
 app.use('/api/chatbot', chatbotRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/checkout', checkoutRouter);
+app.use('/api/orders', ordersRouter);
 app.use('/api/admin', adminRouter);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

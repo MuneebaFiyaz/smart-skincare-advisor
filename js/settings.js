@@ -45,9 +45,7 @@ passwordForm.addEventListener('submit', async (e) => {
       }),
     });
     if (res.ok) {
-        passwordMessage.innerHTML = "<p style='color:green; font-weight:600; font-size:0.85rem;'>Password updated!</p>";
-        passwordForm.reset();
-        setTimeout(() => passwordMessage.innerHTML = "", 3000);
+        logout();
     } else {
         passwordMessage.innerHTML = "<p style='color:red; font-size:0.85rem;'>Incorrect current password.</p>";
     }

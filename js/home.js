@@ -75,13 +75,4 @@ function escapeHomeHtml(value) {
   return element.innerHTML;
 }
 
-const newsletterForm = document.getElementById('newsletterForm');
-if (newsletterForm) {
-  newsletterForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    newsletterForm.reset();
-    showToast('Newsletter sign-up is not connected yet.', { type: 'error' });
-  });
-}
-
 loadFeaturedProducts();
